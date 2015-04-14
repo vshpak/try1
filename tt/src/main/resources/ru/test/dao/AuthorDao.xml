@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ru.test.dao.AuthorDao">
+
+    <sql id="AuthorColumns">
+        author.id as author_id,
+        author.first_name as author_first_name,
+        author.last_name as author_last_name
+    </sql>
+
+    <resultMap id="AuthorResultMap" type="ru.test.domain.Book">
+        <id property="id" column="author_id" />
+        <result property="first_name" column="author_first_name" />
+        <result property="last_name" column="author_last_name" />
+    </resultMap>
+    
+    <select id="authorName" parameterType="map" resultMap="AuthorResultMap">
+        select
+        <include refid="AuthorColumns" />
+        from authors as author
+        where author_id=#{authorId}
+    </select>
+</mapper>

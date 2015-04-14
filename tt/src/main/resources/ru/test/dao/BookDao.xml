@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ru.test.dao.BookDao">
+
+    <sql id="BookColumns">
+        book.id as book_id,
+        book.author_id as book_author_id,
+        book.theme as book_theme,
+        book.description as book_description
+    </sql>
+
+    <resultMap id="BookResultMap" type="ru.test.domain.Book">
+        <id property="id" column="book_id" />
+        <result property="theme" column="book_theme" />
+        <result property="description" column="book_description" />
+    </resultMap>
+    
+    <select id="listBooksByAuthor" parameterType="map" resultMap="BookResultMap">
+        select
+        <include refid="BookColumns" />
+        from books as book
+        where author_id=#{authorId}
+    </select>
+</mapper>
